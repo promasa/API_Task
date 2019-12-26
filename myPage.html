@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <title>マイページ</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <ul >
+      <li><a href="user.html">ユーザー検索</a></li>
+      <li><a href="userPut.html">ユーザー編集</a></li>
+      <li><a href="timeLine.html">Myタイムライン</a></li>
+      <li><a href="tmeLinePutList.html">投稿一覧</a></li>
+    </ul>
+    <h1>マイページ</h1>
+    <p id="myName"></p>
+    <p id="myId"></p>
+    <P id="myBio"></P>
+    <div>
+      <input type="submit" value="ログアウト" id="logout" onclick="logout();return false;">
+    </div>
+    <script>
+      myName.textContent = `ユーザー名：${localStorage.name}`;
+      myId.textContent = `ユーザーID：${localStorage.id}`;
+      myBio.textContent = `プロフィール：${localStorage.bio}`;
+    </script>
+    <script src="main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>投稿一覧</title>
+  <link rel="stylesheet" href="stylesheet.css">
+</head>
+<body>
+  <ul>
+    <li><a href="myPage.html">マイページ</a></li>
+    <li><a href="user.html">ユーザー検索</a></li>
+    <li><a href="userPut.html">ユーザー編集</a></li>
+    <li><a href="timeLine.html">Myタイムライン</a></li>
+  </ul>
+  <h1>投稿一覧</h1>
+  <p>ページ数</p>
+  <input type="text" name="postNamber" id="postNamber" placeholder="ページナンバー">
+  <p>検索ワード</p>
+  <input type="text" name="postSearch" id="postSearch" placeholder="検索ワード">
+  <input type="submit" value="検索" id='searchBtn' onclick="getTimeLineList();return false;">
+  <h2>一覧</h2>
+  <div id="postList"></div>
+  <script src="main.js"></script>
+  <script>
+    getTimeLineList();
+  </script>
+</body>
+</html>

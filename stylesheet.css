@@ -1,0 +1,49 @@
+body {
+  text-align: center;
+  /* color: white;
+  background-color: black; */
+}
+ul {
+  display: flex;
+  justify-content: space-around;
+}
+.sign {
+  display: flex;
+  width: 700px;
+  margin: 0 auto;
+}
+.signUp {
+  margin-right: 150px;
+}
+.btn {
+  margin-top: 50px;
+  width: 100px;
+}
+#userList {
+  text-align: left;
+  width: 600px;
+  margin: 0 auto;
+}
+#postList {
+  text-align: left;
+
+}
+#myPostList {
+  text-align: left;
+  width: 400px;
+  margin-left: 200px;
+}
+#timeLineMenu {
+  display: flex;
+  justify-content: space-around;
+}
+a {
+  color: red
+  ;
+}
+a:visited {
+  color: red
+}
+a:hover {
+  opacity: 0.5;
+}
