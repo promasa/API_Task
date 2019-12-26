@@ -1,24 +1,22 @@
 'use strict'
-
-const urlSignUp = 'https://teachapi.herokuapp.com/sign_up';//API URLリスト
+//API URLリスト
+const urlSignUp = 'https://teachapi.herokuapp.com/sign_up';
 const urlSignIn = 'https://teachapi.herokuapp.com/sign_in';
 const urlUser = 'https://teachapi.herokuapp.com/users/';
 const urlTimeLine = 'https://teachapi.herokuapp.com/posts/';
-
-const urlIndex= 'index.html'; //html URLリスト
+//html URLリスト
+const urlIndex= 'index.html'; 
 const urlUserHtml = 'user.html' ;
 const urlMyPage = 'myPage.html';
 
-const signIn = document.getElementsByClassName('signIn');
 const userList = document.getElementById('userList');
-const timeLine = document.getElementById('timeLine');
 const postList = document.getElementById('postList');
 const myPostList = document.getElementById('myPostList');
 const myName = document.getElementById('myName');
 const myId = document.getElementById('myId');
 const myBio = document.getElementById('myBio');
-
-const removeItem = (key) => {         //ローカルストレージのリセット
+//ローカルストレージのリセット
+const removeItem = (key) => {         
   window.localStorage.removeItem(key);
 }
 const localReset = () => {
@@ -28,19 +26,25 @@ const localReset = () => {
   removeItem('name');
   removeItem('postId');
 }
-const getToken = 'Bearer '+ window.localStorage.getItem('token'); //ローカルストレージから値を取り出す
+//ローカルストレージから値を取り出す
+const getToken = 'Bearer '+ window.localStorage.getItem('token'); 
 const getId = window.localStorage.getItem('id');
-// const getPostId = window.localStorage.getItem('postId');
-
-const move = (url) => {//ページ移動
+//ページ移動
+const move = (url) => {
   location.href = url ;
 }
-const logout = () => {//ログアウト
+//ログアウト
+const logout = () => {
   localReset();
   move(urlIndex);
 }
-
-const getSignUp = () => {//アカウント登録
+//httpに使用するHeadersオブジェクトの生成
+let myHeaders = new Headers();
+myHeaders.append(
+  'Content-Type','application/json'
+)
+//アカウント登録
+const getSignUp = () => {
   localReset();
   const name = document.getElementById('signUpName').value;
   const bio = document.getElementById('signUpBio').value;
@@ -57,12 +61,13 @@ const getSignUp = () => {//アカウント登録
       "password_confirmation": password_confirmation
     }
   }
-  const str = JSON.stringify(sign_up_params);
-  fetch(urlSignUp,{
+  const myBody = JSON.stringify(sign_up_params);
+  const requestOption = {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body:str
-  })
+    headers: myHeaders,
+    body: myBody
+  }
+  fetch(urlSignUp,requestOption)
   .then(response => response.json())
   .then(json => {
     localStorage.token = json.token;
@@ -76,8 +81,10 @@ const getSignUp = () => {//アカウント登録
         alert('登録に失敗しました');
       }
   })
-}  
-const getSignIn = () => {//ログイン
+  .catch(error => `console.log('Error:', ${error}`);
+}
+//ログイン
+const getSignIn = () => {
   localReset();
   const email = document.getElementById('signInEmail').value;
   const password = document.getElementById('signInPassword').value;
@@ -88,13 +95,13 @@ const getSignIn = () => {//ログイン
       "password": password,
     }
   }
-  const str = JSON.stringify(sign_in_params)
-  console.log(sign_in_params);
-  fetch(urlSignIn,{
+  const myBody = JSON.stringify(sign_in_params)
+  const requestOption = {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body:str
-  })
+    headers: myHeaders,
+    body: myBody
+  }
+  fetch(urlSignIn,requestOption)
   .then(response => response.json())
   .then(json => {
     localStorage.token = json.token;
@@ -110,8 +117,8 @@ const getSignIn = () => {//ログイン
   })
   .catch(error => `console.log('Error:', ${error}`);
 }
-
-const getUserList = () => {//ユーザーリストの取得
+//ユーザーリストの取得
+const getUserList = () => {
   userList.innerHTML = '';
   const userListParams = {
     page: document.getElementById('pageNamber').value,
@@ -119,12 +126,16 @@ const getUserList = () => {//ユーザーリストの取得
     query: document.getElementById('search').value,
   }
   const qs = new URLSearchParams(userListParams);
-  fetch(`${urlUser}?${qs}`,{
+  const URL = `${urlUser}?${qs}`;
+  myHeaders = {
+    'Content-Type':'application/json',
+    'Authorization': getToken
+  }
+  const requestOption = {
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': getToken},
-  })
+    headers: myHeaders,
+  }
+  fetch(URL,requestOption)
   .then(response => response.json())
   .then(json => {
     for(let i = 0; i < json.length; i ++){
@@ -137,9 +148,10 @@ const getUserList = () => {//ユーザーリストの取得
       userList.append(p);
     }
   })
+  .catch(error => `console.log('Error:', ${error}`);
 }
-
-const putUser = () => {//ユーザー編集
+//ユーザー編集
+const putUser = () => {
   const name = document.getElementById('putName').value;
   const bio = document.getElementById('putBio').value;
   const putUserParams = {
@@ -148,16 +160,19 @@ const putUser = () => {//ユーザー編集
       "bio": bio
     }
   }
-  const str = JSON.stringify(putUserParams);
-  fetch(`${urlUser}/${getId}`,
-    {method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': getToken
-      },
-      body:str
-    }
-  )
+  const URL = `${urlUser}/${getId}`
+  myHeaders ={
+    'Content-Type': 'application/json',
+    'Authorization': getToken
+  }
+  const myBody = JSON.stringify(putUserParams);
+  
+  const requestOption = {
+    method: 'PUT',
+    headers: myHeaders,
+    body: myBody
+  }
+  fetch(URL,requestOption)
   .then(response => response.json())
   .then(json => {
     alert('変更しました')
@@ -165,27 +180,31 @@ const putUser = () => {//ユーザー編集
     localStorage.bio= json.bio;
     move(urlMyPage)
   })
+  .catch(error => `console.log('Error:', ${error}`);
 }
-
-const deleteUser = () => {//ユーザーの消去
-  fetch(`${urlUser}${getId}`,
-    {method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': getToken
-      }
-    }
-  )
-  .then(alert('ユーザー消去しました'));
-  removeItem('token');
-  removeItem('id');
-  removeItem('bio');
-  removeItem('name');
-  removeItem('postId');
-  move(urlIndex);
+//ユーザーの消去
+const deleteUser = () => {
+  const URL = `${urlUser}${getId}`;
+  myHeaders = {
+    'Content-Type': 'application/json',
+    'Authorization': getToken
+  }
+  const requestOption = {
+    method: 'DELETE',
+    headers: myHeaders
+  }
+  fetch(URL,requestOption)
+  .then(alert('ユーザー消去しました'))
+  removeItem('token')
+  removeItem('id')
+  removeItem('bio')
+  removeItem('name')
+  removeItem('postId')
+  move(urlIndex)
+  .catch(error => `console.log('Error:', ${error}`);
 }
-
-const getTimeLine = () => {//Myタイムライン表示
+//Myタイムライン表示
+const getTimeLine = () => {
   myPostList.innerHTML = '';
   const timeLinePage = document.getElementById('timeLinePage').value;
   const timeLineWord = document.getElementById('timeLineWord').value;
@@ -195,12 +214,16 @@ const getTimeLine = () => {//Myタイムライン表示
     query: timeLineWord
   }
   const qs = new URLSearchParams(timeLineParams);
-  fetch(`${urlUser}${getId}/timeline?${qs}`,
-  {headers: {
+  const URL = `${urlUser}${getId}/timeline?${qs}`;
+  myHeaders = {
     'Content-Type': 'application/json',
-    'Authorization': getToken},
+    'Authorization': getToken
   }
-  )
+  const requestOption = {
+    method: 'GET',
+    headers: myHeaders
+  }
+  fetch(URL,requestOption)
   .then(response => response.json())
   .then(json => {
     for(let i = 0; i < json.length; i ++){
@@ -211,32 +234,38 @@ const getTimeLine = () => {//Myタイムライン表示
       myPostList.append(p);
     }
   })
+  .catch(error => `console.log('Error:', ${error}`);
 }
-
-const timeLinePost = () => {//タイムラインに投稿
+//タイムラインに投稿
+const timeLinePost = () => {
   const postText = document.getElementById('postText').value;
   const timeLinePostParams = {
     "post_params": {
     "text": postText
     }
   }
-  const str = JSON.stringify(timeLinePostParams);
-  fetch(urlTimeLine,{
+  const myBody = JSON.stringify(timeLinePostParams);
+  myHeaders = {
+    'Content-Type': 'application/json',
+    'Authorization': getToken
+  }
+  const requestOption ={
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': getToken,
-    },
-    body: str
-  })
+    headers: myHeaders,
+    body: myBody
+  }
+
+  fetch(urlTimeLine,requestOption)
   .then(response => response.json())
   .then(json =>
   localStorage.postId= json.id
-  );
-  alert('投稿完了');
-  location.reload();
+  )
+  alert('投稿完了')
+  location.reload()
+  .catch(error => `console.log('Error:', ${error}`);
 }
-const timeLinePut = () => {//投稿を編集
+//投稿を編集
+const timeLinePut = () => {
   const putText = document.getElementById('putText').value;
   const putPostId = document.getElementById('putPostId').value;
   const timeLinePUtParams ={
@@ -244,35 +273,41 @@ const timeLinePut = () => {//投稿を編集
       "text": putText
     }
   };
-  const str = JSON.stringify(timeLinePUtParams);
-fetch(`${urlTimeLine}${putPostId}`,{
-method: 'PUT',
-headers: {
-  'Content-Type': 'application/json',
-  'Authorization': getToken
-},
-body: str
-});
-alert('変更しました');
-location.reload();
+  const URL =`${urlTimeLine}${putPostId}`;
+  const myBody = JSON.stringify(timeLinePUtParams);
+  myHeaders = {
+    'Content-Type': 'application/json',
+    'Authorization': getToken
+  }
+  const requestOption = {
+    method: 'PUT',
+    headers:myHeaders,
+    body: myBody
+  }
+fetch(URL,requestOption)
+.then(alert('変更しました'))
+location.reload()
+.catch(error => `console.log('Error:', ${error}`);
 }
-
-const timeLinePostDelete = () => {//投稿消去
+//投稿消去
+const timeLinePostDelete = () => {
   const deletePostId = document.getElementById('deletePostId').value;
-  fetch(`${urlTimeLine}${deletePostId}`,
-    {method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': getToken
-      }
-    }
-  )
-  .then( 
-  alert('投稿を消去しました'))
+  const URL = `${urlTimeLine}${deletePostId}`;
+  myHeaders = {
+    'Content-Type': 'application/json',
+    'Authorization': getToken
+  }
+  const requestOption = {
+    method: 'DELETE',
+    headers: myHeaders
+  }
+  fetch(URL,requestOption)
+  .then( alert('投稿を消去しました'))
   location.reload()
+  .catch(error => `console.log('Error:', ${error}`);
   };
-  
-  const getTimeLineList = () => {//投稿リスト
+  //投稿リスト
+  const getTimeLineList = () => {
     postList.innerHTML = '';
     const timeLineListParams = {
       page: document.getElementById('postNamber').value,
@@ -280,26 +315,28 @@ const timeLinePostDelete = () => {//投稿消去
       query: document.getElementById('postSearch').value,//単語を入れると検索できる
     }
     const qs = new URLSearchParams(timeLineListParams);
-    console.log(qs);
-    fetch(`${urlTimeLine}?${qs}`,{
+    const URL  = `${urlTimeLine}?${qs}`;
+    myHeaders = {
+      'Content-Type': 'application/json',
+      'Authorization': getToken
+    }
+    const requestOption ={
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': getToken},
-    })
+      headers: myHeaders
+    }
+    fetch(URL,requestOption)
     .then(response => response.json())
     .then(json => {
       for(let i = 0; i < json.length; i ++){
         const p = document.createElement('p');
-        console.log(json[i]);
         p.textContent = 
         `投稿ID：${JSON.stringify(json[i].id)}
         ユーザーID：${JSON.stringify(json[i].user.id)}
         ユーザー名：${JSON.stringify(json[i].user.name)}
         投稿内容：${JSON.stringify(json[i].text)}
-        投稿時間：${JSON.stringify(json[i].user.created_at)}`
-        ;
+        投稿時間：${JSON.stringify(json[i].user.created_at)}`;
         postList.append(p);
       }
     })
+    .catch(error => `console.log('Error:', ${error}`);
   };
