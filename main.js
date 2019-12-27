@@ -123,9 +123,27 @@ const getSignIn = () => {
   })
   .catch(error => `console.log('Error:', ${error}`);
 }
-
-const myfunc = () => {
-  alert('hello')
+//フォローボタン
+const onclickFollowBotton = (id) => {
+  const URL = `${urlUser}${id}/follow`;
+  const requestOption = {
+    method: 'POST',
+    headers: myTokenHeaders
+  }
+  fetch(URL,requestOption)
+  .then(alert('フォローしました'))
+  .catch(error => `console.log('Error:', ${error}`);
+}
+//フォロー解除
+const onclickFollowDelete = (id) => {
+  const URL = `${urlUser}${id}/follow`;
+  const requestOption = {
+    method: 'DELETE',
+    headers: myTokenHeaders
+  }
+  fetch(URL,requestOption)
+  .then(alert('フォロー解除しました'))
+  .catch(error => `console.log('Error:', ${error}`);
 }
 
 //ユーザーリストの取得
@@ -149,10 +167,13 @@ const getUserList = () => {
       const p = document.createElement('p');
       p.innerHTML = 
       `ユーザーID：${JSON.stringify(json[i].id)}
+      <br>
       ユーザー名前：${JSON.stringify(json[i].name)}
-      プロフィール：${JSON.stringify(json[i].bio)}`
+      <br>
+      プロフィール：${JSON.stringify(json[i].bio)}
+      <br>`
       ;
-      p.innerHTML += '<button onclick="myfunc()">button</button>'
+      p.innerHTML += '<button onclick="onclickFollowBotton(' + json[i].id + ')">フォロー</button>'
       userList.append(p);
     }
   })
@@ -202,6 +223,18 @@ const deleteUser = () => {
   move(urlIndex)
   .catch(error => `console.log('Error:', ${error}`);
 }
+const myPutDelete = (id) => {
+    const deletePostId = document.getElementById('deletePostId').value;
+    const URL = `${urlTimeLine}${id}`;
+    const requestOption = {
+      method: 'DELETE',
+      headers: myTokenHeaders
+    }
+    fetch(URL,requestOption)
+    .then( alert('投稿を消去しました'))
+    location.reload()
+    .catch(error => `console.log('Error:', ${error}`);
+}
 //Myタイムライン表示
 const getTimeLine = () => {
   myPostList.innerHTML = '';
@@ -227,6 +260,7 @@ const getTimeLine = () => {
       `投稿ID：${JSON.stringify(json[i].id)}
       ${JSON.stringify(json[i].text)}`;
       myPostList.append(p);
+      p.innerHTML += '<button onclick="myPutDelete(' + json[i].id + ')">投稿消去</button>'
     }
   })
   .catch(error => `console.log('Error:', ${error}`);
@@ -276,19 +310,6 @@ fetch(URL,requestOption)
 location.reload()
 .catch(error => `console.log('Error:', ${error}`);
 }
-//投稿消去
-const timeLinePostDelete = () => {
-  const deletePostId = document.getElementById('deletePostId').value;
-  const URL = `${urlTimeLine}${deletePostId}`;
-  const requestOption = {
-    method: 'DELETE',
-    headers: myTokenHeaders
-  }
-  fetch(URL,requestOption)
-  .then( alert('投稿を消去しました'))
-  location.reload()
-  .catch(error => `console.log('Error:', ${error}`);
-  };
   //投稿リスト
   const getTimeLineList = () => {
     postList.innerHTML = '';
@@ -308,41 +329,20 @@ const timeLinePostDelete = () => {
     .then(json => {
       for(let i = 0; i < json.length; i ++){
         const p = document.createElement('p');
-        p.textContent = 
-        `投稿ID：${JSON.stringify(json[i].id)}
-        ユーザーID：${JSON.stringify(json[i].user.id)}
+        p.innerHTML = 
+        `ユーザーID：${JSON.stringify(json[i].user.id)}
+        <br>
         ユーザー名：${JSON.stringify(json[i].user.name)}
+        <br>
         投稿内容：${JSON.stringify(json[i].text)}
-        投稿時間：${JSON.stringify(json[i].user.created_at)}`;
+        <br>
+        投稿時間：${JSON.stringify(json[i].user.created_at)}
+        <br>`;
         postList.append(p);
       }
     })
     .catch(error => `console.log('Error:', ${error}`);
   };
-  //ユーザーフォロー
-  const userFollow = () => {
-    const followId = document.getElementById('followId').value;
-    const URL = `${urlUser}${followId}/follow`;
-    const requestOption = {
-      method: 'POST',
-      headers: myTokenHeaders
-    }
-    fetch(URL,requestOption)
-    .then(alert('フォローしました'))
-    .catch(error => `console.log('Error:', ${error}`);
-  }
-  //ユーザーフォロー解除
-  const userFollowDelete = () => {
-    const followId = document.getElementById('followId').value;
-    const URL = `${urlUser}${followId}/follow`;
-    const requestOption = {
-      method: 'DELETE',
-      headers: myTokenHeaders
-    }
-    fetch(URL,requestOption)
-    .then(alert('フォロー解除しました'))
-    .catch(error => `console.log('Error:', ${error}`);
-  }
   //フォロー一覧
   const followList = ()  => {
     myFollowList.innerHTML = '';
@@ -357,11 +357,15 @@ const timeLinePostDelete = () => {
     .then(json => {
       for(let i = 0; i < json.length; i ++){
         const p = document.createElement('p')
-        p.textContent = 
+        p.innerHTML = 
         `ユーザーID：${JSON.stringify(json[i].id)}
+        <br>
         ユーザー名：${JSON.stringify(json[i].name)}
-        プロフィール：${JSON.stringify(json[i].bio)}`;
+        <br>
+        プロフィール：${JSON.stringify(json[i].bio)}
+        <br>`;
         myFollowList.append(p);
+        p.innerHTML += '<button onclick="onclickFollowDelete(' + json[i].id + ')">フォロー解除</button>'
       }
     })
     .catch(error => `console.log('Error:', ${error}`);
@@ -379,10 +383,13 @@ const timeLinePostDelete = () => {
     .then(json => {
       for(let i = 0; i < json.length; i ++){
         const p = document.createElement('p')
-        p.textContent = 
+        p.innerHTML = 
         `ユーザーID：${JSON.stringify(json[i].id)}
+        <br>
         ユーザー名：${JSON.stringify(json[i].name)}
-        プロフィール：${JSON.stringify(json[i].bio)}`;
+        <br>
+        プロフィール：${JSON.stringify(json[i].bio)}
+        <br>`;
         myFollowersList.append(p);
       }
     })

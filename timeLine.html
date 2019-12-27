@@ -2,23 +2,22 @@
 <html lang="ja">
   <head>
     <meta charset="UTF-8">
-    <title>Myタイムライン</title>    
+    <title>投稿ページ</title>    
     <link rel="stylesheet" href="stylesheet.css">
   </head>
   <body>
     <ul>
       <li><a href="myPage.html">マイページ</a></li>
       <li><a href="user.html">ユーザー検索</a></li>
-      <li><a href="userPut.html">ユーザー編集</a></li>
-      <li><a href="tmeLinePutList.html">投稿一覧</a></li>
+      <li><a href="tmeLinePutList.html">タイムライン</a></li>
     </ul>
-    <h1>Myタイムライン</h1>
+    <h1>投稿ページ</h1>
     <p>投稿する</p>
     <input type="text" id="postText" placeholder="投稿内容">
     <input type="submit" value="投稿" id="timeLinePostBtn" onclick="timeLinePost();return false;">
     <div id="timeLineMenu">
-      <div>
-        <h1>My投稿検索</h1>
+      <div class="postSearch">
+        <h2>投稿検索</h2>
         <p>ページ</p>
         <input type="text" id="timeLinePage" placeholder="ページ数">
         <p>検索ワード</p>
@@ -27,19 +26,13 @@
       </div>
       <div>
         <div></div>
-        <h1>My投稿編集</h1>
+        <h2>投稿編集</h2>
         <p>編集投稿ID</p>
         <input type="text" id="putPostId" placeholder="ID">
         <p>内容</p>
         <input type="text" id="putText" placeholder="新しい内容">
         <input type="submit" value="投稿変更" id="timeLinePutBtn" onclick="timeLinePut();return false;">
-      </div>
-      <div> 
-        <h1>My投稿消去</h1>
-        <p>消去したい投稿ID</p>
-        <input type="text" id="deletePostId" placeholder="ID">
-        <input type = "submit" id="postDeleteBtn" value="投稿消去" onclick="timeLinePostDelete();return false;">
-      </div>   
+      </div>  
     </div>
     <div id="myPostList"></div>
     <script src="main.js"></script>
