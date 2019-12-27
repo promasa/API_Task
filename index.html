@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <title>SNS</title>
+  <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <div class="sign">
+      <div class="signUp">
+        <h1>アカウント登録</h1>
+        <p>お名前</p>
+        <input type="text" id="signUpName" placeholder="お名前">
+        <p>プロフィール</p>
+        <input type="text" id="signUpBio" placeholder="自己紹介">
+        <p>メールアドレス</p>
+        <input type="email" id="signUpEmail" placeholder="Email">
+        <p>パスワード</p>
+        <input type="password" id="signUpPassword" placeholder="password">
+        <p>パスワード確認</p>
+        <input type="password" id="signUpPassword_confirmation" placeholder="password">
+        <div></div>
+        <input type="submit" id="signUpBtn" class="btn" value="登録" onclick="getSignUp();return false;">
+      </div>
+      <div class="signIn">
+        <h1>ログイン</h1>
+        <p>メールアドレス</p>
+        <input type="text" id="signInEmail" placeholder="Email">
+        <p>パスワード</p>
+        <input type="password" id="signInPassword" placeholder="password">
+        <div></div>
+        <input type="submit" id="signInBtn" class="btn" value="ログイン" onclick="getSignIn();return false;">
+      </div>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>
