@@ -19,6 +19,20 @@
     <div>
       <input type="submit" value="ログアウト" id="logout" onclick="logout();return false;">
     </div>
+    <div class="followList">
+      <input type="button" value="フォロー一覧" onclick="followList();return false;">
+      <div id="myFollowList"></div>
+    </div>
+
+    <div class="followersList">
+      <input type="button" value="フォロワー一覧" onclick="followersList();return false;">
+      <div id="myFollowersList"></div>
+    </div>
+    <div class="userFollow">
+      <p>フォロー解除するユーザーのID</p>
+      <input type="namber" id="followId">
+      <input type="submit" value="フォロー" id="followBtn" onclick="userFollowDelete();return false;">
+    </div>
     <script>
       myName.textContent = `ユーザー名：${localStorage.name}`;
       myId.textContent = `ユーザーID：${localStorage.id}`;

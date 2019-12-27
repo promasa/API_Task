@@ -1,7 +1,7 @@
 body {
   text-align: center;
-  /* color: white;
-  background-color: black; */
+  color: white;
+  background-color: black;
 }
 ul {
   display: flex;

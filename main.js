@@ -12,6 +12,8 @@ const urlMyPage = 'myPage.html';
 const userList = document.getElementById('userList');
 const postList = document.getElementById('postList');
 const myPostList = document.getElementById('myPostList');
+const myFollowList = document.getElementById('myFollowList');
+const myFollowersList = document.getElementById('myFollowersList');
 const myName = document.getElementById('myName');
 const myId = document.getElementById('myId');
 const myBio = document.getElementById('myBio');
@@ -43,6 +45,10 @@ let myHeaders = new Headers();
 myHeaders.append(
   'Content-Type','application/json'
 )
+let myTokenHeaders = {
+  'Content-Type': 'application/json',
+  'Authorization': getToken
+}
 //アカウント登録
 const getSignUp = () => {
   localReset();
@@ -117,6 +123,11 @@ const getSignIn = () => {
   })
   .catch(error => `console.log('Error:', ${error}`);
 }
+
+const myfunc = () => {
+  alert('hello')
+}
+
 //ユーザーリストの取得
 const getUserList = () => {
   userList.innerHTML = '';
@@ -127,24 +138,21 @@ const getUserList = () => {
   }
   const qs = new URLSearchParams(userListParams);
   const URL = `${urlUser}?${qs}`;
-  myHeaders = {
-    'Content-Type':'application/json',
-    'Authorization': getToken
-  }
   const requestOption = {
     method: 'GET',
-    headers: myHeaders,
+    headers: myTokenHeaders,
   }
   fetch(URL,requestOption)
   .then(response => response.json())
   .then(json => {
     for(let i = 0; i < json.length; i ++){
       const p = document.createElement('p');
-      p.textContent = 
+      p.innerHTML = 
       `ユーザーID：${JSON.stringify(json[i].id)}
       ユーザー名前：${JSON.stringify(json[i].name)}
       プロフィール：${JSON.stringify(json[i].bio)}`
       ;
+      p.innerHTML += '<button onclick="myfunc()">button</button>'
       userList.append(p);
     }
   })
@@ -161,15 +169,10 @@ const putUser = () => {
     }
   }
   const URL = `${urlUser}/${getId}`
-  myHeaders ={
-    'Content-Type': 'application/json',
-    'Authorization': getToken
-  }
   const myBody = JSON.stringify(putUserParams);
-  
   const requestOption = {
     method: 'PUT',
-    headers: myHeaders,
+    headers: myTokenHeaders,
     body: myBody
   }
   fetch(URL,requestOption)
@@ -185,13 +188,9 @@ const putUser = () => {
 //ユーザーの消去
 const deleteUser = () => {
   const URL = `${urlUser}${getId}`;
-  myHeaders = {
-    'Content-Type': 'application/json',
-    'Authorization': getToken
-  }
   const requestOption = {
     method: 'DELETE',
-    headers: myHeaders
+    headers: myTokenHeaders
   }
   fetch(URL,requestOption)
   .then(alert('ユーザー消去しました'))
@@ -215,13 +214,9 @@ const getTimeLine = () => {
   }
   const qs = new URLSearchParams(timeLineParams);
   const URL = `${urlUser}${getId}/timeline?${qs}`;
-  myHeaders = {
-    'Content-Type': 'application/json',
-    'Authorization': getToken
-  }
   const requestOption = {
     method: 'GET',
-    headers: myHeaders
+    headers: myTokenHeaders
   }
   fetch(URL,requestOption)
   .then(response => response.json())
@@ -245,13 +240,9 @@ const timeLinePost = () => {
     }
   }
   const myBody = JSON.stringify(timeLinePostParams);
-  myHeaders = {
-    'Content-Type': 'application/json',
-    'Authorization': getToken
-  }
   const requestOption ={
     method: 'POST',
-    headers: myHeaders,
+    headers: myTokenHeaders,
     body: myBody
   }
 
@@ -275,13 +266,9 @@ const timeLinePut = () => {
   };
   const URL =`${urlTimeLine}${putPostId}`;
   const myBody = JSON.stringify(timeLinePUtParams);
-  myHeaders = {
-    'Content-Type': 'application/json',
-    'Authorization': getToken
-  }
   const requestOption = {
     method: 'PUT',
-    headers:myHeaders,
+    headers:myTokenHeaders,
     body: myBody
   }
 fetch(URL,requestOption)
@@ -293,13 +280,9 @@ location.reload()
 const timeLinePostDelete = () => {
   const deletePostId = document.getElementById('deletePostId').value;
   const URL = `${urlTimeLine}${deletePostId}`;
-  myHeaders = {
-    'Content-Type': 'application/json',
-    'Authorization': getToken
-  }
   const requestOption = {
     method: 'DELETE',
-    headers: myHeaders
+    headers: myTokenHeaders
   }
   fetch(URL,requestOption)
   .then( alert('投稿を消去しました'))
@@ -316,13 +299,9 @@ const timeLinePostDelete = () => {
     }
     const qs = new URLSearchParams(timeLineListParams);
     const URL  = `${urlTimeLine}?${qs}`;
-    myHeaders = {
-      'Content-Type': 'application/json',
-      'Authorization': getToken
-    }
     const requestOption ={
       method: 'GET',
-      headers: myHeaders
+      headers: myTokenHeaders
     }
     fetch(URL,requestOption)
     .then(response => response.json())
@@ -340,3 +319,72 @@ const timeLinePostDelete = () => {
     })
     .catch(error => `console.log('Error:', ${error}`);
   };
+  //ユーザーフォロー
+  const userFollow = () => {
+    const followId = document.getElementById('followId').value;
+    const URL = `${urlUser}${followId}/follow`;
+    const requestOption = {
+      method: 'POST',
+      headers: myTokenHeaders
+    }
+    fetch(URL,requestOption)
+    .then(alert('フォローしました'))
+    .catch(error => `console.log('Error:', ${error}`);
+  }
+  //ユーザーフォロー解除
+  const userFollowDelete = () => {
+    const followId = document.getElementById('followId').value;
+    const URL = `${urlUser}${followId}/follow`;
+    const requestOption = {
+      method: 'DELETE',
+      headers: myTokenHeaders
+    }
+    fetch(URL,requestOption)
+    .then(alert('フォロー解除しました'))
+    .catch(error => `console.log('Error:', ${error}`);
+  }
+  //フォロー一覧
+  const followList = ()  => {
+    myFollowList.innerHTML = '';
+    const URL = `${urlUser}${getId}/followings`;
+    const requestOption = {
+      method: 'GET',
+      headers: myTokenHeaders,
+    }
+    console.log(URL)
+    fetch(URL,requestOption)
+    .then(response => response.json())
+    .then(json => {
+      for(let i = 0; i < json.length; i ++){
+        const p = document.createElement('p')
+        p.textContent = 
+        `ユーザーID：${JSON.stringify(json[i].id)}
+        ユーザー名：${JSON.stringify(json[i].name)}
+        プロフィール：${JSON.stringify(json[i].bio)}`;
+        myFollowList.append(p);
+      }
+    })
+    .catch(error => `console.log('Error:', ${error}`);
+  }   
+  //フォロワー一覧
+  const followersList = ()  => {
+    myFollowersList.innerHTML = '';
+    const URL = `${urlUser}${getId}/followers`;
+    const requestOption = {
+      method: 'GET',
+      headers: myTokenHeaders,
+    }
+    fetch(URL,requestOption)
+    .then(response => response.json())
+    .then(json => {
+      for(let i = 0; i < json.length; i ++){
+        const p = document.createElement('p')
+        p.textContent = 
+        `ユーザーID：${JSON.stringify(json[i].id)}
+        ユーザー名：${JSON.stringify(json[i].name)}
+        プロフィール：${JSON.stringify(json[i].bio)}`;
+        myFollowersList.append(p);
+      }
+    })
+    .catch(error => `console.log('Error:', ${error}`);
+  }  
