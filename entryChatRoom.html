@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>参加中のチャットルーム</title>
+  <link rel="stylesheet" href="stylesheet.css">
+</head>
+<body>
+  <div class="roomName">
+    <h1>ルーム名</h1>
+  </div>
+  <a href="chatRoom.html">退室</a>
+  <div class="message">
+    <input type="text" id="chatPostMessage" placeholder="チャットメッセージ">
+    <input type="submit" onclick="messageChatRoom(getChatRoomId);return false;">
+  </div>
+  <input type="submit" value="更新" onclick="getChatRoomMessage(getChatRoomId);return false;">
+  <div id="messageList"></div>
+  <script src="main.js"></script>
+  <script>getChatRoomMessage(getChatRoomId)</script>
+</body>
+</html>

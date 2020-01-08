@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <title>投稿ページ</title>    
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <ul>
+      <li><a href="myPage.html">マイページ</a></li>
+      <li><a href="user.html">ユーザー検索</a></li>
+      <li><a href="tmeLinePutList.html">タイムライン</a></li>
+      <li><a href="chatRoom.html">チャットルーム</a></li>
+    </ul>
+    <h1>投稿ページ</h1>
+    <p>投稿する</p>
+    <input type="text" id="postText" placeholder="投稿内容">
+    <input type="submit" value="投稿" id="timeLinePostBtn" onclick="timeLinePost();return false;">
+    <div id="timeLineMenu">
+      <div class="postSearch">
+        <h2>投稿検索</h2>
+        <p>ページ</p>
+        <input type="text" id="timeLinePage" placeholder="ページ数">
+        <p>検索ワード</p>
+        <input type="text" id="timeLineWord" placeholder="検索ワード">
+        <input type="submit" value="検索" id='timeLineBtn' onclick="getTimeLine();return false;">
+      </div>
+    </div>
+    <div id="myPostList"></div>
+    <script src="main.js"></script>
+    <script >getTimeLine()</script>
+  </body>
+</html>

@@ -1,0 +1,66 @@
+body {
+  text-align: center;
+  color: white;
+  background-color: black;
+}
+ul {
+  display: flex;
+  justify-content: space-around;
+}
+.sign {
+  display: flex;
+  width: 700px;
+  margin: 0 auto;
+}
+.signUp {
+  margin-right: 150px;
+}
+.btn {
+  margin-top: 50px;
+  width: 100px;
+}
+#userList {
+  text-align: left;
+  width: 300px;
+  margin: 0 auto;
+}
+#postList {
+  text-align: left;
+  width: 300px;
+  margin: 0 auto;
+}
+#logout {
+  margin-top: 30px;
+}
+#myPostList {
+  text-align: left;
+  width: 400px;
+  margin: 50px auto;
+
+}
+#timeLineMenu {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+.postSearch {
+  width: 200px;
+}
+a {
+  color: red
+  ;
+}
+a:visited {
+  color: red
+}
+a:hover {
+  opacity: 0.5;
+}
+.followMenu {
+  display: flex;
+  justify-content: center;
+  text-align: left;
+}
+.followList {
+  width: 300px;
+}

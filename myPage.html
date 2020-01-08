@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <title>マイページ</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <ul >
+      <li><a href="user.html">ユーザー検索</a></li>
+      <li><a href="myPost.html">投稿ページ</a></li>
+      <li><a href="tmeLinePutList.html">タイムライン</a></li>
+      <li><a href="chatRoom.html">チャットルーム</a></li>
+    </ul>
+    <h1>マイページ</h1>
+    <p id="myName"></p>
+    <p id="myId"></p>
+    <P id="myBio"></P>
+    <a href="userEdit.html">ユーザー編集</a>
+    <div>
+      <input type="submit" value="ログアウト" id="logout" onclick="signOut();return false;">
+    </div>
+    <div class="followMenu">
+      <div class="followList">
+        <input type="button" value="フォロー確認" onclick="followList();return false;">
+        <div id="myFollowList"></div>
+      </div>
+      <div class="followersList">
+        <input type="button" value="フォロワー確認" onclick="followersList();return false;">
+        <div id="myFollowersList"></div>
+      </div>
+    </div>
+      <script>
+      myName.textContent = `ユーザー名：${localStorage.name}`;
+      myId.textContent = `ユーザーID：${localStorage.id}`;
+      myBio.textContent = `プロフィール：${localStorage.bio}`;
+    </script>
+    <script src="main.js"></script>
+  </body>
+</html>
