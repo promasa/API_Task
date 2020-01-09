@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>チャットルームの作成</title>
+  <link rel="stylesheet" href="stylesheet.css">
+</head>
+<body>
+  <ul >
+    <li><a href="user.html">ユーザー検索</a></li>
+    <li><a href="timeLine.html">投稿する</a></li>
+    <li><a href="tmeLinePutList.html">タイムライン</a></li>
+    <li><a href="myPage.html">マイページ</a></li>
+  </ul>
+<h1>チャットルーム</h1>
+<h2>ルーム作成</h2>
+<p>ルーム名</p>
+<input type="text" id="newChatName">
+<input type="submit" value="作成" onclick="createRoom();return false;">
+<div class="chatRoomList">
+  <h2>ルーム一覧</h2>
+  <p>検索</p>
+  <input type="text" id="chatSearchPage" placeholder="ページ">
+  <input type="text" id="chatSearchWord" placeholder="キーワード">
+  <input type="submit" value="検索" onclick="getChatRoom();return false;">
+  <div id="chatRoomList"></div>
+</div>
+<script src="main.js"></script>
+<script>getChatRoom()</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <title>SNS</title>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
+  <body>
+    <a href="myPage.html">マイページに戻る</a>
+    <h1>ユーザー編集</h1>
+    <p>新しい名前を入力してください</p>
+    <input type="text" id="putName" placeholder="New名前">
+    <p>新しいプロフィールを入力してください</p>
+    <input type="text" id="putBio" placeholder="Newプロフィール">
+    <input type="submit" value="更新" id='putBtn' onclick="userEdit();return false;">
+    <h1>ユーザー消去</h1>
+    <input type = "submit" id="deleteBtn" value="アカウント消去" onclick="userDelete();return false;">
+    <script src="main.js"></script>
+
+  </body>
+</html>

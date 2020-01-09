@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <html lang="ja">
+    <link rel="stylesheet" href="stylesheet.css">
+    <title>ユーザー検索</title>
+  </head>
+  <body>
+    <ul >
+      <li><a href="myPage.html">マイページ</a></li>
+      <li><a href="myPost.html">投稿ページ￥</a></li>
+      <li><a href="tmeLinePutList.html">タイムライン</a></li>
+      <li><a href="chatRoom.html">チャットルーム</a></li>
+    </ul>
+    <div class="userSearch">
+      <h1>ユーザー検索</h1>
+      <p>ページ番号</p>
+      <input type="text" name="pageNamber" id="pageNamber" placeholder="ページナンバー">
+      <p>キーワード</p>
+      <input type="text" name="search" id="search" placeholder="キーワード">
+      <input type="submit" value="検索" id='searchBtn' onclick="getUserList();return false;">
+      <h2>ユーザー一覧</h2>
+      <div id="userList">
+      </div>
+    </div>
+    <div class="userFollow">
+      <p>フォローしたいユーザーのID</p>
+      <input type="namber" id="followId">
+      <input type="submit" value="フォロー" id="followBtn" onclick="userFollow();return false;">
+    </div>
+      <script src="main.js"></script>
+      <script>
+        getUserList();
+      </script>
+  </body>
+</html>
